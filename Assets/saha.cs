@@ -15,7 +15,7 @@ public class saha : MonoBehaviour
     public GameObject karakter;
     public GameObject top1;
     public float hız3;
-    public SpriteRenderer saharenk;
+    public static bool kontrol;
     private void Start()
     {
         skor_karakter = 0;
@@ -39,41 +39,43 @@ public class saha : MonoBehaviour
         }
     }
     System.Random rastgele = new System.Random();
-       
-       public float randomR;
-       public  float randomG;
-       public float randomB;
     private void Update()
     {
-        
-        
-        
-       
         if (top1.transform.position.x > yapay_zeka1.transform.position.x)
         {
             skor_karakter++;
             skor_karakter_yazı.text = skor_karakter.ToString();
-            baslama_yerine_dön();
-           
+            baslama_yerine_dön();        
         }
         if (top1.transform.position.x < karakter.transform.position.x)
         {
             skor_yapay_zeka++;
             skor_yapay_zeka_yazı.text = skor_yapay_zeka.ToString();
             baslama_yerine_dön();
-           
         }
- for (int i=0;i<1;i++)
-        {   
-            randomR = rastgele.Next(100, 255);
-            randomG = rastgele.Next(100, 255);
-            randomB = rastgele.Next(100, 255);
-            
-            saharenk.color = new Color(randomR, randomG, randomB);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+       if(collision.gameObject.name=="karakter_2")
+        {
+            kontrol = false;
         }
-        
+       if(collision.gameObject.name=="top")
+        {
+            kontrol = true;
+        }
+
 
     }
-    
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+       /* if (collision.gameObject.name == "karakter_1"||collision.gameObject.name=="karakter_2")
+        {
+            kontrol = false;
+        }*/
+        
+    }
+
 
 }

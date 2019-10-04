@@ -17,6 +17,8 @@ public class yapay_zeka : MonoBehaviour
     public static float ilk_baslangıc_x_yapay_zeka, ilk_baslangıc_y_yapay_zeka;
     double artıy = 5.64;
     double eksiy = -4.53;
+    public static bool top_baslangıc_konum;
+    public Collider2D top_sınır;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +31,7 @@ public class yapay_zeka : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hız2 = 100;
+        hız2 = 400;
         if (yapay_zeka_alan.kontrol == true)
         {
             if (karakter_1.transform.position.y < top.transform.position.y)
@@ -50,37 +52,37 @@ public class yapay_zeka : MonoBehaviour
             }
             if(karakter_1.transform.position.y==top.transform.position.y|| karakter_1.transform.position.y < top.transform.position.y)
             {
-                hız2 = 150;
+                
                 rigidbod1.velocity = Vector2.up * hız2 * Time.deltaTime;
             }
             if(karakter_1.transform.position.y==top.transform.position.y|| karakter_1.transform.position.y > top.transform.position.y)
             {
-                hız2 = 150;
+                
                 rigidbod1.velocity = Vector2.down * hız2 * Time.deltaTime;
             }
             if (karakter_1.transform.position.x == top.transform.position.x || karakter_1.transform.position.x < top.transform.position.x)
             {
-                hız2 = 150;
+                
                 rigidbod1.velocity = Vector2.left * hız2 * Time.deltaTime;
             }
             if ( karakter_1.transform.position.x < top.transform.position.x&&  karakter_1.transform.position.y < top.transform.position.y)
             {
-                hız2 = 200;
+                
                 rigidbod1.velocity = new Vector2(1*hız2*Time.deltaTime, 1*hız2*Time.deltaTime);
             }
             if ( karakter_1.transform.position.x > top.transform.position.x &&  karakter_1.transform.position.y < top.transform.position.y)
             {
-                hız2 = 200;
+                
                 rigidbod1.velocity = new Vector2(-1 * hız2 * Time.deltaTime, 1 * hız2 * Time.deltaTime);
             }
             if (karakter_1.transform.position.x > top.transform.position.x && karakter_1.transform.position.y > top.transform.position.y)
             {
-                hız2 = 200;
+                
                 rigidbod1.velocity = new Vector2(-1 * hız2 * Time.deltaTime, -1 * hız2 * Time.deltaTime);
             }
             if (karakter_1.transform.position.x < top.transform.position.x && karakter_1.transform.position.y > top.transform.position.y)
             {
-                hız2 = 200;
+                
                 rigidbod1.velocity = new Vector2(1 * hız2 * Time.deltaTime, -1 * hız2 * Time.deltaTime);
             }
             Debug.Log("top_alanda");
@@ -91,28 +93,29 @@ public class yapay_zeka : MonoBehaviour
         }
   else  if(yapay_zeka_alan.kontrol==false)
         {
+            hız2 = 500;
             baslangıc_x = top.transform.position.x - 1;
             baslangıc_y = top.transform.position.y - 1;
             if (baslangıc_x<karakter_1.transform.position.x)
             {
-                hız2 = 300;
+                
                 rigidbod1.velocity = new Vector2(1 * hız2 * Time.deltaTime, 1);
                 Debug.Log("ileri gidildi");
             }
             if (baslangıc_x > karakter_1.transform.position.x)
             {
-                hız2 = 300;
+                
                 rigidbod1.velocity = new Vector2(-1 * hız2 * Time.deltaTime,1);
                 Debug.Log("geri gidildi");
             }
             if(baslangıc_y<karakter_1.transform.position.y)
             {
-                hız2 = 100;
+                
                 rigidbod1.velocity = new Vector2(1, -1 * hız2 * Time.deltaTime);
             }
             if(baslangıc_y>karakter_1.transform.position.y)
             {
-                hız2 = 100;
+                
                 rigidbod1.velocity = new Vector2(1, 1 * hız2 * Time.deltaTime);
             }
             Debug.Log(baslangıc_x + " " + baslangıc_y);
@@ -125,7 +128,8 @@ public class yapay_zeka : MonoBehaviour
         if (collision.gameObject.name == "top")
         {
             if (gameObject.name == "karakter_1")
-            {hız2 = 150;
+            {
+                top_sınır.isTrigger = false;
                 if (konum_artıy < konum_eksiy)
                 {
                     Debug.Log("yukarı");
@@ -150,9 +154,20 @@ public class yapay_zeka : MonoBehaviour
         {
             if(gameObject.name=="karakter_1")
             {
+                top_sınır.isTrigger = true;
                 hız2 = 150;
                 collision.attachedRigidbody.AddForce(Vector2.left * hız2);
                 Debug.Log("2");
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "top")
+        {
+            if (gameObject.name == "karakter_1")
+            {
+                top_sınır.isTrigger = false;
             }
         }
     }
