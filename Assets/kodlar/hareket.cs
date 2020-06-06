@@ -27,6 +27,7 @@ public class hareket : MonoBehaviour
     void Update()
     {
         hız =500;
+        //Bilgisayar da yaptığım testler sırasında kullandığım tuş kodları.
         /*rigibod.AddForce(transform.forward * hız);
         if (Input.GetKey(KeyCode.D))
         {
